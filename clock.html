@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Real Vaqtli Soat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      transition: background 0.5s, color 0.5s;
+      background: #0f172a;
+      color: white;
+    }
+    .soat {
+      font-size: 80px;
+      margin-bottom: 10px;
+    }
+    .sana, .salom {
+      font-size: 24px;
+      margin: 5px;
+    }
+    .tema-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: white;
+      color: black;
+      transition: 0.3s ease;
+    }
+    .light {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .light .tema-btn {
+      background: #0f172a;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="salom" id="salom">Salom!</div>
+  <div class="soat" id="soat">00:00:00</div>
+  <div class="sana" id="sana">00.00.0000</div>
+  <button class="tema-btn" onclick="temaAlmashtir()">🌙 Mavzuni o‘zgartir</button>
+
+  <script>
+    function yangilash() {
+      const hozir = new Date();
+
+      let soat = hozir.getHours();
+      let minut = hozir.getMinutes();
+      let soniya = hozir.getSeconds();
+
+      soat = soat < 10 ? "0" + soat : soat;
+      minut = minut < 10 ? "0" + minut : minut;
+      soniya = soniya < 10 ? "0" + soniya : soniya;
+
+      document.getElementById("soat").textContent = `${soat}:${minut}:${soniya}`;
+
+      const kun = hozir.getDate();
+      const oy = hozir.getMonth() + 1;
+      const yil = hozir.getFullYear();
+      document.getElementById("sana").textContent = `${kun < 10 ? "0" + kun : kun}.${oy < 10 ? "0" + oy : oy}.${yil}`;
+
+      const salom = document.getElementById("salom");
+      if (soat >= 5 && soat < 12) {
+        salom.textContent = "☀️ Xayrli tong!";
+      } else if (soat >= 12 && soat < 18) {
+        salom.textContent = "🌤 Xayrli kun!";
+      } else if (soat >= 18 && soat < 23) {
+        salom.textContent = "🌙 Xayrli kech!";
+      } else {
+        salom.textContent = "🌌 Xayrli tun!";
+      }
+    }
+
+    function temaAlmashtir() {
+      document.body.classList.toggle("light");
+    }
+
+    setInterval(yangilash, 1000);
+    yangilash();
+  </script>
+
+</body>
+</html>
